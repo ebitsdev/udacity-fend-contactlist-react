@@ -32,26 +32,6 @@ componentDidMount(){
       }))
     })
   }
-<<<<<<< HEAD
-
-  render() {
-    return (
-      <div>
-        <Route exact path='/' render={() => (
-          <ListContacts
-            onDeleteContact={this.removeContact}
-            contacts={this.state.contacts}
-          />
-        )}/>
-        <Route path='/create' render={({ history }) => (
-          <CreateContact
-            onCreateContact={(contact) => {
-              this.createContact(contact)
-              history.push('/')
-            }}
-          />
-        )}/>
-=======
   render() {
     return (
       <div className='app'>
@@ -72,7 +52,6 @@ componentDidMount(){
         }}
         />
       )}/>
->>>>>>> contactlist
       </div>
     );
   }
