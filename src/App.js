@@ -1,8 +1,11 @@
 import React, { Component } from "react";
+import { Route } from 'react-router-dom';
 import ListContacts from "./ListContacts";
+import CreateContact from './CreateContact';
 import * as ContactsAPI from './utils/ContactsAPI';
 
 class App extends Component {
+
   state = {
       contacts: []
     }
@@ -19,10 +22,36 @@ componentDidMount(){
       }));
       ContactsAPI.remove(contact);
   }
+
+  createContact(contact){
+    // Go to the ContactsAPI
+    ContactsAPI.create(contact).then(contact => {
+      this.setState(state => ({
+        // Return an object by concatenating the new contact
+        contacts: state.contacts.concat([ contact ])
+      }))
+    })
+  }
   render() {
     return (
-      <div>
-        <ListContacts onDeleteContact={this.removeContact} contacts={this.state.contacts} />
+      <div className='app'>
+      <Route exact path='/' render={() => (
+
+      <ListContacts
+      onDeleteContact={this.removeContact}
+      contacts={this.state.contacts}
+      />
+      )}/>
+      {/* History is a props from React-Router */}
+      <Route path='/create' render={( {history }) => (
+        <CreateContact
+        onCreateContact={(contact) => {
+          this.createContact(contact);
+          // To go back to the home page after adding the new contact
+          history.push('/')
+        }}
+        />
+      )}/>
       </div>
     );
   }
